@@ -1,0 +1,46 @@
+* {
+  font-family: sans-serif;
+}
+#filter_option {
+  /* padding-left: 10px; */
+  margin-left: auto;
+  margin-right: auto;
+}
+#filter_option label {
+  padding-left: 10px;
+}
+#filter_option input,
+#filter_option select {
+  border-radius: 3px;
+  border: 1px solid black;
+  width: 200px;
+  padding: 4px;
+  font-size: 17px;
+}
+/* #rows tr {
+    width: 90%;
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+  } */
+/* #rows tr td {
+    border: 1px solid black;
+  } */
+#rows {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: sans-serif;
+  margin-top: 10px;
+  font-size: 19px;
+}
+#rows tbody tr:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+#rows tbody tr {
+  /* padding-top: 20px; */
+  line-height: 38px;
+}
+#rows tbody tr td {
+  font-family: sans-serif;
+}

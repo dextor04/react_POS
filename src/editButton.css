@@ -1,0 +1,49 @@
+* {
+  font-family: sans-serif;
+}
+.heading {
+  /* border: 1px solid black; */
+  width: 100%;
+  text-align: center;
+}
+.headingBody {
+  font-size: 25px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid black; */
+}
+.headingBody input {
+  /* padding: 10px; */
+  font-size: 20px;
+  border-radius: 3px;
+  border: 1px solid black;
+}
+.headingBody select {
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 3px;
+  border: 1px solid black;
+  width: 274px;
+}
+.headingBody tbody tr td {
+  padding-left: 25px;
+  line-height: 60px;
+}
+.add {
+  background-color: green;
+  color: white;
+  cursor: pointer;
+}
+.cancel {
+  background-color: red;
+  margin-left: 10px;
+  color: white;
+  cursor: pointer;
+}
+#buttons {
+  display: flex;
+  justify-content: left;
+  align-items: left;
+}

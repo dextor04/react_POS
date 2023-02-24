@@ -1,0 +1,26 @@
+* {
+  font-family: sans-serif;
+}
+.home_icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  margin-left: 20px;
+  border: 1px solid rgba(4, 139, 255, 255);
+  background-color: rgba(4, 139, 255, 255);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.table {
+  height: 10px;
+}
+#heading {
+  width: 99%;
+  /* height: 10px; */
+}
+.heading {
+  display: inline-block;
+  font-size: 30px;
+  /* width: 1500px; */
+}
