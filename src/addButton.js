@@ -4,12 +4,15 @@ import { Link } from "react-router-dom";
 // import { Link } from "react-router-dom";
 // hello kishore
 function AddButton() {
+  let date = new Date();
+  let dateString =
+    date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
   const [formData, setFormData] = useState({
     item_no: "",
     item_name: "",
     price: "",
     img: "",
-    created_date: new Date().toLocaleDateString(),
+    created_date: dateString,
     purchased: "",
     sold: "",
     stock: "",

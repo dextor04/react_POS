@@ -9,6 +9,32 @@ import { Link } from "react-router-dom";
 import MyModal from "./Modal";
 
 function In_body() {
+  // ----------------------------------------------
+  const [selectedValue, setSelectedValue] = useState("default");
+  const [productData, setProductData] = useState([]);
+
+  useEffect(() => {
+    const data = localStorage.getItem("productData");
+    if (data) {
+      setProductData(JSON.parse(data));
+    }
+  }, []);
+  const handleSelectChange = (event) => {
+    const value = event.target.value;
+    setSelectedValue(value);
+    if (value === "Today") {
+      const date = new Date();
+      let dateString =
+        date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+      console.log(dateString);
+      const filteredData = productData.filter((item) => {
+        return item.created_date === dateString;
+      });
+      console.log(filteredData);
+    }
+  };
+
+  const isCustomSelected = selectedValue === "Custom";
   // ------------------------------------getting the content from the localstorage and display on the screen-----------
   const [posts, setPosts] = useState(null);
   useEffect(() => {
@@ -30,13 +56,22 @@ function In_body() {
     const trElement = event.target.parentNode.parentNode;
     const data = JSON.parse(localStorage.getItem("productData"));
     const indexes = Number(trElement.firstChild.innerHTML);
-    const filteredData = data.filter((item) => item.item_no !== indexes);
-    for (let i = 0; i < filteredData.length; i++) {
-      filteredData[i].item_no = i + 1;
+
+    // Show a confirmation prompt message
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this item?"
+    );
+
+    if (confirmDelete) {
+      const filteredData = data.filter((item) => item.item_no !== indexes);
+      for (let i = 0; i < filteredData.length; i++) {
+        filteredData[i].item_no = i + 1;
+      }
+      localStorage.setItem("productData", JSON.stringify(filteredData));
+      setPosts(filteredData); // update the state with the filtered data
     }
-    localStorage.setItem("productData", JSON.stringify(filteredData));
-    setPosts(filteredData); // update the state with the filtered data
   };
+
   // --------------------------------------------preview option-------------
   const review = (event) => {
     const trElement = event.target.parentNode.parentNode;
@@ -46,13 +81,14 @@ function In_body() {
     // <!-- Modal -->
     // <!-- view button -->
     console.log(filteredData);
+    // -------------------------------------
   };
   return (
     <div>
       <div id="filter_option">
         {/* ... */}
         <label htmlFor="cars">Filter By: </label>
-        <select name="date" id="dates">
+        <select name="date" id="dates" onChange={handleSelectChange}>
           <option value="default">--selected--</option>
           <option value="Today">Today</option>
           <option value="Yesterday">Yesterday</option>
@@ -63,9 +99,9 @@ function In_body() {
           <option value="Custom">Custom</option>
         </select>
         <label>From:</label>
-        <input type="date"></input>
+        <input type="date" disabled={!isCustomSelected}></input>
         <label>To: </label>
-        <input type="date"></input>
+        <input type="date" disabled={!isCustomSelected}></input>
       </div>
       <div
         style={{
