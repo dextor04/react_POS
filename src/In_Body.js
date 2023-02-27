@@ -19,6 +19,7 @@ function In_body() {
       setProductData(JSON.parse(data));
     }
   }, []);
+  // filter the data by using the filter option
   const handleSelectChange = (event) => {
     const value = event.target.value;
     setSelectedValue(value);
@@ -31,7 +32,180 @@ function In_body() {
         return item.created_date === dateString;
       });
       console.log(filteredData);
+    } else if (value === "Yesterday") {
+      console.log("yesterday is selected");
+      let date = new Date();
+      date.setDate(date.getDate() - 1);
+      let yesterday =
+        date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+      console.log(yesterday);
+      const filteredData = productData.filter((item) => {
+        return item.created_date === yesterday;
+      });
+      console.log(filteredData);
+    } else if (value === "This Week") {
+      let date = new Date();
+      let thisWeekStart = new Date(
+        date.setDate(date.getDate() - date.getDay() + 1)
+      );
+      let thisWeekEnd = new Date(
+        date.setDate(date.getDate() - date.getDay() + 7)
+      );
+      let thisWeek = [];
+      for (
+        let i = thisWeekStart;
+        i <= thisWeekEnd;
+        i.setDate(i.getDate() + 1)
+      ) {
+        thisWeek.push(
+          i.getDate() + "-" + (i.getMonth() + 1) + "-" + i.getFullYear()
+        );
+      }
+      console.log(thisWeek);
+      const filteredData = productData.filter((item) => {
+        return thisWeek.includes(item.created_date);
+      });
+      console.log(filteredData);
+    } else if (value === "Last Week") {
+      console.log("Last Week is selected");
+      let lastweekdate = new Date();
+      let lastWeekStart = new Date(
+        lastweekdate.setDate(lastweekdate.getDate() - lastweekdate.getDay() - 6)
+      );
+
+      let lastdate = new Date();
+      let lastWeekEnd = new Date(
+        lastdate.setDate(lastdate.getDate() - lastdate.getDay())
+      );
+
+      let lastWeek = [];
+      let start =
+        lastWeekStart.getDate() +
+        "-" +
+        (lastWeekStart.getMonth() + 1) +
+        "-" +
+        lastWeekStart.getFullYear();
+      let end =
+        lastWeekEnd.getDate() +
+        "-" +
+        (lastWeekEnd.getMonth() + 1) +
+        "-" +
+        lastWeekEnd.getFullYear();
+
+      for (
+        let i = lastWeekStart;
+        i <= lastWeekEnd;
+        i.setDate(i.getDate() + 1)
+      ) {
+        lastWeek.push(
+          i.getDate() + "-" + (i.getMonth() + 1) + "-" + i.getFullYear()
+        );
+      }
+      console.log(lastWeek);
+      const filteredData = productData.filter((item) => {
+        return lastWeek.includes(item.created_date);
+      });
+      console.log(filteredData);
+    } else if (value === "This Month") {
+      console.log("This month is selected");
+      let date = new Date();
+      let thisMonthStart = new Date(date.getFullYear(), date.getMonth(), 1);
+      let thisMonthEnd = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+      let thisMonth = [];
+
+      for (
+        let i = thisMonthStart;
+        i <= thisMonthEnd;
+        i.setDate(i.getDate() + 1)
+      ) {
+        thisMonth.push(
+          i.getDate() + "-" + (i.getMonth() + 1) + "-" + i.getFullYear()
+        );
+      }
+      console.log(thisMonth);
+      const filteredData = productData.filter((item) => {
+        return thisMonth.includes(item.created_date);
+      });
+      console.log(filteredData);
+    } else if (value === "Last Month") {
+      console.log("last month is selected");
+      let date = new Date();
+      let lastMonthStart = new Date(date.getFullYear(), date.getMonth() - 1, 1);
+      let lastMonthEnd = new Date(date.getFullYear(), date.getMonth(), 0);
+
+      let lastMonth = [];
+
+      for (
+        let i = lastMonthStart;
+        i <= lastMonthEnd;
+        i.setDate(i.getDate() + 1)
+      ) {
+        lastMonth.push(
+          i.getDate() + "-" + (i.getMonth() + 1) + "-" + i.getFullYear()
+        );
+      }
+      console.log(lastMonth);
+      const filteredData = productData.filter((item) => {
+        return lastMonth.includes(item.created_date);
+      });
+      console.log(filteredData);
     }
+  };
+
+  const [fromDate, setFromDate] = useState("");
+  let from_input = "";
+  const handleFromDateChange = (event) => {
+    console.log("fromdate");
+    const date = new Date(event.target.value);
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Month starts from 0, so adding 1 to get the correct month number
+    const year = date.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
+    console.log(formattedDate); // Outputs: "2-4-2022"
+    setFromDate(formattedDate);
+    from_input = formattedDate;
+  };
+  let to_input = "";
+  const handleToDateChange = (event) => {
+    console.log("todate");
+    const date = new Date(event.target.value);
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Month starts from 0, so adding 1 to get the correct month number
+    const year = date.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
+    console.log(formattedDate);
+    to_input = formattedDate;
+    const starting_date = fromDate;
+    const ending_date = to_input;
+    // getting the from and to date in the  format of dd-mm-yyyy
+    console.log(starting_date, ending_date);
+    // getting the dates between the start and end
+    const dates = [];
+
+    // Convert starting_date and ending_date to Date objects
+    const start_date_obj = new Date(
+      starting_date.split("-").reverse().join("-")
+    );
+    const end_date_obj = new Date(ending_date.split("-").reverse().join("-"));
+
+    // Loop through dates from start_date_obj to end_date_obj and add each date to dates array
+    for (
+      let date = start_date_obj;
+      date <= end_date_obj;
+      date.setDate(date.getDate() + 1)
+    ) {
+      const formattedDate = `${date.getDate()}-${
+        date.getMonth() + 1
+      }-${date.getFullYear()}`;
+      dates.push(formattedDate);
+    }
+
+    console.log(dates);
+    const filteredData = productData.filter((item) => {
+      return dates.includes(item.created_date);
+    });
+    console.log(filteredData);
   };
 
   const isCustomSelected = selectedValue === "Custom";
@@ -99,9 +273,19 @@ function In_body() {
           <option value="Custom">Custom</option>
         </select>
         <label>From:</label>
-        <input type="date" disabled={!isCustomSelected}></input>
+        <input
+          type="date"
+          id="from"
+          onChange={handleFromDateChange}
+          disabled={!isCustomSelected}
+        ></input>
         <label>To: </label>
-        <input type="date" disabled={!isCustomSelected}></input>
+        <input
+          type="date"
+          id="to"
+          onChange={handleToDateChange}
+          disabled={!isCustomSelected}
+        ></input>
       </div>
       <div
         style={{
